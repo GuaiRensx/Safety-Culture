@@ -2,7 +2,7 @@
 	<div class="home">
 		<div class="header">
 			<mu-appbar style="width: 100%;" color="primary">
-				<mu-button icon slot="left">
+				<mu-button icon slot="left" :ripple="false" >
 					<mu-icon size="36" value="chevron_left"></mu-icon>
 				</mu-button>
 				安全文明
@@ -13,7 +13,7 @@
 				<mu-divider></mu-divider>
 				<mu-list>
 					<mu-container data-mu-loading-color="secondary" @click="fullscreen()" data-mu-loading-overlay-color="rgba(0, 0, 0, .7)" v-loading="loading2" class="demo-loading-wrap" >
-						<mu-list-item button :ripple="true" @click="nextdrop()">
+						<mu-list-item button :ripple="true" @click="aqscNextdrop()">
 							<mu-list-item-action>
 								<mu-icon value="info" color="blue"></mu-icon>
 							</mu-list-item-action>
@@ -21,8 +21,8 @@
 						</mu-list-item>
 						<mu-divider></mu-divider>
 					</mu-container>
-					<mu-container data-mu-loading-color="secondary" data-mu-loading-overlay-color="rgba(0, 0, 0, .7)" v-loading="loading2" class="demo-loading-wrap">
-						<mu-list-item button :ripple="true" to="" @click="fullscreen()">
+					<mu-container data-mu-loading-color="secondary" @click="fullscreen()" data-mu-loading-overlay-color="rgba(0, 0, 0, .7)" v-loading="loading2" class="demo-loading-wrap">
+						<mu-list-item button :ripple="true" @click="wmsgNextdrop()" >
 							<mu-list-item-action>
 								<mu-icon value="info" color="blue"></mu-icon>
 							</mu-list-item-action>
@@ -30,8 +30,8 @@
 						</mu-list-item>
 						<mu-divider></mu-divider>
 					</mu-container>
-					<mu-container data-mu-loading-color="secondary" data-mu-loading-overlay-color="rgba(0, 0, 0, .7)" v-loading="loading2" class="demo-loading-wrap">
-						<mu-list-item button :ripple="true" to="safetyProduction" @click="fullscreen()">
+					<mu-container data-mu-loading-color="secondary" @click="fullscreen()" data-mu-loading-overlay-color="rgba(0, 0, 0, .7)" v-loading="loading2" class="demo-loading-wrap">
+						<mu-list-item button :ripple="true" @click="sgcfNextdrop()">
 							<mu-list-item-action>
 								<mu-icon value="info" color="blue"></mu-icon>
 							</mu-list-item-action>
@@ -47,18 +47,15 @@
 <script>
 	import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
 	import Vue from 'vue';
-	import router from 'vue-router'
 	import Loading from 'muse-ui-loading';
 	Vue.use(Loading);
-	Vue.use(router)
 	export default {
 		name: 'Home',
 		data() {
 			return {
 				msg: 'Welcome',
 				loading1: false,
-				loading2: false,
-				nextDrop:false,
+				loading2: false
 				
 			};
 		},
@@ -69,17 +66,24 @@
 				text:'正在跳转'	
 				});
 				setTimeout(() => {
-//					console.log(this.nextDrop)
 					loading.close();
 				}, 1000)		
 			},
-			nextdrop(){
-				console.log(111)
+			aqscNextdrop(){
 					setTimeout(() => {
-						console.log(2222)
-							this.$router.push({ name:"SafetyProduction"})
+							this.$router.push({ name:"Aqsc"})
 				}, 1000)	
-			}
+			},
+			wmsgNextdrop(){
+					setTimeout(() => {
+							this.$router.push({ name:"Wmsg"})
+				}, 1000)	
+			},
+			sgcfNextdrop(){
+					setTimeout(() => {
+							this.$router.push({ name:"Sgcf"})
+				}, 1000)	
+			},
 		}
 	}
 </script>
