@@ -14,9 +14,10 @@ export default {
 @import './styles/main.less';
 #app {
 	height: 100%;
-	font-family: 'Avenir',Helvetica,Arial,sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing:grayscale;
+	/*font-family: 'Avenir',Helvetica,Arial,sans-serif;*/
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	/*-webkit-font-smoothing: antialiased;*/
+	/*-moz-osx-font-smoothing:grayscale;*/
 	.fs(16);
 	color: #2c3e50;
 }

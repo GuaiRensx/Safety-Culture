@@ -4,7 +4,8 @@ import Home from '@/components/Home'
 import Aqsc from '@/components/pages/Aqsc'
 import Wmsg from '@/components/pages/Wmsg'
 import Sgcf from '@/components/pages/Sgcf'
-import About from '@/components/pages/About'
+import Addexamine from '@/components/pages/Addexamine'
+import Addpunish from '@/components/pages/Addpunish'
 
 
 Vue.use(Router)
@@ -36,9 +37,15 @@ export default new Router({
 			component: Sgcf //该路由所引用的组件的名字
 		},
 						{
-			path: '/home/about', //path:匹配的hash地址
-			name: 'About', //路由的名字
-			component: About //该路由所引用的组件的名字
+			path: '/home/aqsc/addexamine', //path:匹配的hash地址
+			name: 'Addexamine', //路由的名字
+			component: Addexamine //该路由所引用的组件的名字
 		},
+						{
+			path: '/home/sgcf/addpunish', //path:匹配的hash地址
+			name: 'Addpunish', //路由的名字
+			component: Addpunish //该路由所引用的组件的名字
+		},
+
   ]
 })
