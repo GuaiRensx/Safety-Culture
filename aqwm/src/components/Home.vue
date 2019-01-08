@@ -1,12 +1,14 @@
 <template>
 	<div class="home">
-		<div class="header">
-			<mu-appbar style="width: 100%;" color="primary">
-				<mu-button icon slot="left" :ripple="false" >
+	<div class="header clearfix">
+			<div class="header_left fl">
+				<mu-button icon slot="left"	>
 					<mu-icon size="36" value="chevron_left"></mu-icon>
 				</mu-button>
+			</div>
+			<div class="header_right fl">
 				安全文明
-			</mu-appbar>
+			</div>
 		</div>
 		<div class="list">
 			<mu-paper :z-depth="1" class="demo-list-wrap">
@@ -62,7 +64,7 @@
 		methods: {
 			fullscreen() {
 				const loading = this.$loading({
-					 overlayColor: 'hsla(0,0,0,1)',
+					 overlayColor: 'hsla(0,0%,100%,.9)',
 				text:'正在跳转'	
 				});
 				setTimeout(() => {
@@ -71,6 +73,7 @@
 			},
 			aqscNextdrop(){
 					setTimeout(() => {
+						console.log(this.$router);
 							this.$router.push({ name:"Aqsc"})
 				}, 1000)	
 			},
@@ -91,4 +94,24 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 	@import '../styles/main.less';
+	.header{
+		top: 0;
+		color:#fff;
+		z-index: 999;
+		.w(375);
+		.h(48);
+		background:#1B8EE9;
+		.header_right{
+			.lh(48);
+			.fs(16);
+			.padding-left(105);
+			font-weight: bold;
+		}
+	}
+	.list{
+		width: 100%;
+		.mu-list{
+			padding: 0;
+		}
+	}
 </style>

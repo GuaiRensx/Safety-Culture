@@ -1,13 +1,13 @@
 <template>
-	<div class="addpunish">
+	<div class="addwmsg">
 		<div class="header clearfix">
 			<div class="header_left fl">
-				<mu-button icon slot="left" @click="backAqsc()">
+				<mu-button icon slot="left" @click="backWmsg()">
 					<mu-icon size="36" value="chevron_left"></mu-icon>
 				</mu-button>
 			</div>
 			<div class="header_right fl">
-				新增处罚
+				新增检查
 			</div>
 		</div>
 		<!--检查项-->
@@ -16,18 +16,18 @@
 				<mu-form :model="form" class="mu-demo-form" label-position="left" label-width="100">
 					<ul>
 						<li>
-							<div class="title">选择处罚项目</div>
+							<div class="title">选择检查项目</div>
 						</li>
 						<li class="punish_time">
 							<div class="inner clearfix">
-								<span class="fl">处罚时间</span>
+								<span class="fl">检查时间</span>
 								<input class="fl" type="date" name="" id="" value="" v-model="form.date" />
 							</div>
 						</li>
 						<li class=" punish_num">
 							<div class="inner clearfix">
 								<span class="fl">项目编号</span>
-								<select class="fl" filterable v-model="form.select_num" prop="punish_num" style="appearance: none;
+								<select class="fl" filterable v-model="form.select_num" prop="punish_state" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -36,17 +36,20 @@
 						<li class=" punish_name">
 							<div class="inner clearfix">
 								<span class="fl">项目名称</span>
-								<div class="clearfix" @click="isShow1=!isShow1">
+								<div id="" @click="isShow1=!isShow1">
 									<input class="fl" id="currentXmmc" type="text" placeholder="输入项目编号或名称查询" readonly="readonly">
-									<div class="dot clearfix"><i></i>
-										<p></p><i></i></div>
+									<div class="dot clearfix">
+										<i></i>
+										<p></p>
+										<i></i>
+									</div>
 								</div>
 							</div>
 						</li>
 						<li class=" punish_node">
 							<div class="inner clearfix">
 								<span class="fl">施工节点</span>
-								<select class="fl" filterable v-model="form.select_node" prop="punish_node" style="appearance: none;
+								<select class="fl" filterable v-model="form.select_node" prop="punish_state" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -61,159 +64,74 @@
 								</select>
 							</div>
 						</li>
-						<li class=" punish_item">
-							<div class="inner clearfix">
-								<span class="fl">处罚条款</span>
-								<select class="fl" filterable v-model="form.select_item" prop="punish_item" style="appearance: none;
-						-webkit-appearance: none;">
-									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-								</select>
-							</div>
-						</li>
-						<li class=" punish_unit">
-							<div class="inner clearfix">
-								<span class="fl">被处罚单位</span>
-								<select class="fl" filterable v-model="form.select_unit" prop="punish_unit" style="appearance: none;
-						-webkit-appearance: none;">
-									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-								</select>
-							</div>
-						</li>
-						<li class=" punish_pep">
-							<div class="inner clearfix">
-								<span class="fl">被处罚人</span>
-								<select class="fl" filterable v-model="form.select_pep" prop="punish_pep" style="appearance: none;
-						-webkit-appearance: none;">
-									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-								</select>
-							</div>
-						</li>
-						<li @click="showHistory=!showHistory">
-							<div class="title">历史处罚回顾
-								<mu-icon size="30" :value="!showHistory?'keyboard_arrow_down':'keyboard_arrow_up'" color="#212121"></mu-icon>
-							</div>
-						</li>
-						<div class="lscf" v-show="showHistory">
-							<ul>
-								<li class=" punish_source">
-									<div class="inner clearfix">
-										<span class="fl">处罚来源</span>
-										<select class="fl" filterable v-model="form.oldselect_source" prop="punish_source" style="appearance: none;
-						-webkit-appearance: none;">
-											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-										</select>
-									</div>
-								</li>
-								<li class="oldPunish_time">
-									<div class="inner clearfix">
-										<span class="fl">处罚时间</span>
-										<input class="fl" type="text" name="" id="" value="" v-model="form.oldDate" />
-									</div>
-								</li>
-								<li class=" punish_nature">
-									<div class="inner clearfix">
-										<span class="fl">处罚性质</span>
-										<select class="fl" filterable v-model="form.oldselect_nature" prop="punish_nature" style="appearance: none;
-						-webkit-appearance: none;">
-											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-										</select>
-									</div>
-								</li>
-								<li class=" punish_sum">
-									<div class="inner clearfix">
-										<span class="fl">处罚金额</span>
-										<select class="fl" filterable v-model="form.oldselect_sum" prop="punish_sum" style="appearance: none;
-						-webkit-appearance: none;">
-											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-										</select>
-									</div>
-								</li>
-								<li class="mianze">
-									<div class="inner clearfix">
-										<span class="fl">是否免责</span>
-										<div class="free fl">
-											<mu-radio v-model="form.Radio" value="是" label="是"></mu-radio>
-											<mu-radio v-model="form.Radio" value="否" label="否"></mu-radio>
-										</div>
-									</div>
-								</li>
-								<li class="">
-									<div class="inner clearfix">
-										<span class="fl">免责原因</span>
-										<input class="fl" v-model="form.oldmzyy" id="currentXmmc" type="text">
-									</div>
-								</li>
-								<li class="">
-									<div class="inner clearfix">
-										<span class="fl">照片依据</span>
-										<input class="fl" v-model="form.oldzpyj" id="" type="text">
-									</div>
-								</li>
-							</ul>
-						</div>
 						<li>
-							<div class="title" @click="showNow=!showNow">本次处罚情况
-								<mu-icon size="30" :value="!showNow?'keyboard_arrow_down':'keyboard_arrow_up'" color="#212121"></mu-icon>
+							<div class="title">选择检查点</div>
+						</li>
+						<li>
+							<div class="inner clearfix">
+								<div id="" @click="isShow2=!isShow2">
+									<span class="fl">检查分项</span>
+									<input class="fl" id="currentXmmc" type="text" placeholder="请选择" readonly="readonly">
+									<div class="dot clearfix">
+										<i></i>
+										<p></p>
+										<i></i>
+									</div>
+								</div>
 							</div>
 						</li>
-						<div class="bccf" v-show="showNow">
-							<ul>
-								<li class=" punish_source">
-									<div class="inner clearfix">
-										<span class="fl">处罚来源</span>
-										<select class="fl" filterable v-model="form.nowSelect_source" prop="punish_source" style="appearance: none;
-						-webkit-appearance: none;">
-											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-										</select>
-									</div>
-								</li>
-								<li class=" punish_nature">
-									<div class="inner clearfix">
-										<span class="fl">处罚性质</span>
-										<select class="fl" filterable v-model="form.nowSelect_nature" prop="punish_nature" style="appearance: none;
-						-webkit-appearance: none;">
-											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-										</select>
-									</div>
-								</li>
-								<li class=" punish_sum">
-									<div class="inner clearfix">
-										<span class="fl">处罚金额</span>
-										<select class="fl" filterable v-model="form.nowSelect_sum" prop="punish_sum" style="appearance: none;
-						-webkit-appearance: none;">
-											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-										</select>
-									</div>
-								</li>
-								<li class="mianze">
-									<div class="inner clearfix">
-										<span class="fl">是否免责</span>
-										<div class="free fl">
-											<mu-radio v-model="form.nowRadio" value="是" label="是"></mu-radio>
-											<mu-radio v-model="form.nowRadio" value="否" label="否"></mu-radio>
-										</div>
-									</div>
-								</li>
-								<li class="">
-									<div class="inner clearfix">
-										<span class="fl">免责原因</span>
-										<input class="fl" v-model="form.nowmzyy" id="currentXmmc" type="text">
-									</div>
-								</li>
-								<li class="zpyj">
-									<div class="inner clearfix">
-										<span class="fl">照片依据</span>
-										<input class="fl" v-model="form.nowzpyj" id="" type="text">
-										 <mu-button class="uploadBtn" textColor="#666666" color="#fff">上传</mu-button>
-									</div>
-								</li>
-							</ul>
-						</div>
+						<!--<li>
+							<div class="title">检验批基础数据</div>
+						</li>
+						<li class="">
+							<div class="inner clearfix">
+								<span class="fl">检验批部位</span>
+								<input class="fl" id="currentXmmc" type="text" placeholder="请输入">
+							</div>
+						</li>
+						<li class=" ">
+							<div class="inner clearfix">
+								<span class="fl">工程常用词</span>
+								<input class="fl" id="currentXmmc" type="text" placeholder="" readonly="readonly">
+							</div>
+						</li>
+						<li class=" punish_jyprl">
+							<div class="inner clearfix">
+								<span class="fl">检验批容量</span>
+								<input class="fl" id="currentXmmc" type="text" placeholder="请输入">
+								<select class="fl" filterable v-model="form.select_jyprl" prop="punish_state">
+									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
+								</select>
+							</div>
+						</li>-->
+						<!--<li>
+							<div class="title">工程施工图
+								<div class="show_gallery">
+									从图库选择
+								</div>
+							</div>
+						</li>
+						<li class=" punish_pic">
+							<div class="pic clearfix">
+								<div class="fl">
+									<mu-icon value="clear" color="#fff"></mu-icon>
+									<img src="../../assets/demo.jpg" />
+								</div>
+								<div class="fl">
+									<mu-icon value="clear" color="#fff"></mu-icon>
+									<img src="../../assets/demo.jpg" />
+								</div>
+								<div class="fl addPic">
+									<mu-icon size="30" value="add" color="#999"></mu-icon>
+									<p>本地上传</p>
+								</div>
+							</div>
+						</li>-->
 					</ul>
 				</mu-form>
 			</div>
 		</div>
-				<div class="showXMname" v-show="isShow1">
+		<div class="showXMname" v-show="isShow1">
 			<div class="set_project">
 				<div class="set_title">
 					<i class="material-icons" @click="isShow1=false">close</i>
@@ -233,9 +151,107 @@
 				</ul>
 			</div>
 		</div>
+		<div class="showFX" v-show="isShow2">
+			<div class="set_project">
+				<div class="set_title">
+					<i class="material-icons" @click="isShow2=false">close</i>
+					<span>选择检查分项</span>
+				</div>
+				<div class="tab_content">
+					<ul class="tabs clearfix">
+						<li v-for="(tab,index) in tabsName">
+							<div class="tab-link" @click="tabsSwitch(index)" v-bind:class="{active:tab.isActive}">{{tab.name}}</div>
+						</li>
+					</ul>
+					<div class="cards">
+						<div class="tab-card" style="display: block;">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix" @click="">
+										<span>主体结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>地基与基础</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-card">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>砌体结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>钢结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>混泥土结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-card">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>石砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>填充墙砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>混凝土小型空心砌块砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+									<li>
+									<div class="clearfix">
+										<span>配筋砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>砖砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-card">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>石砌体质量检验记录</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="submit_btn">
-			<!--<mu-button full-width style="height: 100%;" color="#1B8EE9">确认并开始验收</mu-button>-->
-			<button>提交</button>
+			<button>确认并开始检查</button>
 		</div>
 	</div>
 </template>
@@ -246,18 +262,47 @@
 	import Loading from 'muse-ui-loading';
 	Vue.use(Loading);
 	export default {
-		name: 'Addpunish',
+		name: 'Addexamine',
 		data() {
 			return {
 				msg: '添加检查记录',
+				tabsName: [{
+						name: "分部工程",
+						isActive: true
+					}, {
+						name: "子分部工程",
+						isActive: false
+					}, {
+						name: "分项工程",
+						isActive: false
+					},
+					{
+						name: "检查记录",
+						isActive: false
+					}
+				],
+				active: false,
 				isShow1: false,
-				showHistory: false,
-				showNow:false,
-				showClear:false,
+				isShow2: false,
+				showClear: false,
+				istrue: 0,
+				items: [{
+						name: '分部工程'
+					},
+					{
+						name: '子分部工程'
+					},
+					{
+						name: '分项工程'
+					},
+					{
+						name: '检查记录'
+					}
+				],
 				options: [
 					'请选择', '段', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Z111213213',
 					'Option 5', 'Option 6', 'Option 7', 'Option 8',
-					'Option 9', 'Option 10', '施工检查', '教育', '2018/12/12', '1000'
+					'Option 9', 'Option 10'
 				],
 				form: {
 					select_num: 'Z111213213',
@@ -265,28 +310,30 @@
 					select_node: '',
 					select_area: '',
 					select_jyprl: '段',
-					select_item: '',
-					select_pep: '',
-					select_unit: '',
-					oldselect_source: '施工检查',
-					oldselect_nature: '教育',
-					oldselect_sum: '1000',
-					oldmzyy: '无',
-					oldDate: '2018/12/12',
-					oldzpyj: '照片依据.jpg',
-					nowSelect_source: '施工检查',
-					nowSelect_nature: '教育',
-					nowSelect_sum: '1000',
-					nowmzyy:'',
-					nowRadio:'',
 					date: '',
-					Radio: '否',
 				},
 			}
 		},
 		methods: {
+			//选项卡切换
+			tabsSwitch: function(tabIndex) {
+
+				var tabCardCollection = document.querySelectorAll(".tab-card"),
+					len = tabCardCollection.length;
+
+				for(var i = 0; i < len; i++) {
+					tabCardCollection[i].style.display = "none";
+					this.tabsName[i].isActive = false;
+				}
+				this.tabsName[tabIndex].isActive = true;
+				tabCardCollection[tabIndex].style.display = "block";
+			},
+			tab(index) {
+				this.curId = index;
+				console.log(this.curId)
+			},
 			//返回上一页
-			backAqsc() {
+			backWmsg() {
 				var self = this;
 				const loading = self.$loading({
 					overlayColor: 'hsla(0,0%,100%,.9)',
@@ -300,21 +347,21 @@
 			backAqscdrop() {
 				setTimeout(() => {
 					this.$router.push({
-						name: "Sgcf"
+						name: "Wmsg"
 					})
 				}, 1000)
 			},
-			showClearbtn(){
+			showClearbtn() {
 				console.log(this.$refs.input1.value)
-				if(this.$refs.input1.value!=''){
-					this.showClear=true;
-				}else{
-					this.showClear=false;
+				if(this.$refs.input1.value != '') {
+					this.showClear = true;
+				} else {
+					this.showClear = false;
 				}
-				
+
 			},
-			clearInput(){
-				this.$refs.input1.value="";
+			clearInput() {
+				this.$refs.input1.value = "";
 			}
 		}
 	}
@@ -347,10 +394,18 @@
 		border-bottom: 1px solid #e8e8e8;
 		.fs(14);
 		.padding(12, 15, 8, 15);
-		i {
+		.show_gallery {
+			.w(94);
+			.fs(14);
+			.h(30);
+			.lh(30);
+			text-align: center;
+			.padding(0, 6, 0, 6);
+			color: #03a9f4;
+			border: 1px solid #03a9f4;
 			position: absolute;
-			.right(5);
-			.top(5);
+			.top(7);
+			.left(255);
 		}
 	}
 	
@@ -358,9 +413,8 @@
 		.margin-top(48);
 		.form-check_item {
 			background: #fff;
-			.padding-bottom(150);
 			ul {
-				
+				.margin-bottom(50);
 				width: 100%;
 				li {
 					.inner {
@@ -370,7 +424,6 @@
 						.lh(44);
 					}
 					span {
-						.w(80);
 						color: #666666;
 						.margin-right(10);
 					}
@@ -378,10 +431,10 @@
 						border: none;
 						/*appearance: none;*/
 						/*-webkit-appearance: none;*/
-						.w(250);
+						.w(260);
 						.h(44);
 						/*.padding-left(10);*/
-						.margin-left(10);
+						.margin-left(5);
 						.fs(16);
 						color: #333333;
 					}
@@ -389,10 +442,9 @@
 						border: none;
 						.top(10);
 						right: 0;
-						.w(250);
+						/*.w(270);*/
 						.h(44);
 						.margin-right(5);
-						.margin-left(10);
 						.fs(16);
 						color: #333333;
 					}
@@ -420,35 +472,14 @@
 						}
 					}
 				}
-				.mianze {
-					position: relative;
-					.free {
-						position: absolute;
-						.top(7);
-						right: 0;
-						.w(250);
-						.h(24);
-					}
-				}
-				.zpyj{
-					position: relative;
-					.uploadBtn{
-						position: absolute;
-						.top(6);
-						.right(1);
-						box-shadow: none;
-						border-left: 1px dashed #ccc;
-					}
-				}
 				.punish_time {
 					input {
 						margin: 0;
 						padding: 0;
-						/*.margin-right(5);*/
-						.margin-left(10);
+						.margin-right(5);
 						.fs(16);
 						color: #333333;
-						.w(250);
+						.w(255);
 						.h(44);
 						border-radius: 5px;
 						border-color: #E9E9E9;
@@ -666,6 +697,62 @@
 					position: absolute;
 					top: 0;
 					.left(130);
+				}
+			}
+			.tab_content {
+				.active {
+					.h(44);
+					border-bottom: 2px solid #039be5;
+				}
+				ul {
+					border-bottom: 1px solid #ccc;
+					li {
+						.h(44);
+						.lh(44);
+						color: rgb(222, 222, 222);
+						width: 25%;
+						text-align: center;
+						float: left;
+						.fs(14);
+						.tab-link {
+							display: block;
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
+				.cards {
+					float: left;
+					.w(375);
+					.tab-card {
+						width: 100%;
+						height: 100%;
+						display: none;
+						.tab-card_content{
+							width: 100%;
+							border: none;
+							li{
+								width: 100%;
+								div{
+									.w(365);
+									.margin-left(10);
+									border-bottom: 1px solid #e8e8e8;
+									position: relative;
+									span{
+										float: left;
+										color: #212121;
+										.fs(14);
+									}
+									i{
+										position: absolute;
+										.top(5);
+										.right(20);
+										font-weight: bold;
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}

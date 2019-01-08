@@ -1,15 +1,19 @@
 <template>
 	<div class="Aqsc">
-		<div class="header headerFixed">
-			<mu-appbar style="width: 100%;" color="primary">
-				<mu-button icon slot="left" to="/">
+				<div class="header clearfix">
+			<div class="header_left fl">
+				<mu-button icon slot="left"	@click="backHome()">
 					<mu-icon size="36" value="chevron_left"></mu-icon>
 				</mu-button>
+			</div>
+			<div class="header_center fl">
 				安全生产
-				<mu-button icon slot="right" @click="show1=!show1">
+			</div>
+						<div class="header_right fr">
+				<mu-button icon slot="left"	@click="show1=!show1">
 					<mu-icon size="30" value="search"></mu-icon>
 				</mu-button>
-			</mu-appbar>
+			</div>
 		</div>
 		<div class="content">
 			<mu-container style="padding: 0;">
@@ -18,18 +22,18 @@
 					<li v-for="(n,index) in 10" :key="index">
 						<div class="info_top">
 							<dl>
-								<dd>
+								<dd >
 									<span class="fs">检查项目：</span>
-									<span>ZZ020018001_保现投资_总部</span>
+									<span>ZZ020018001_保现投资_总部工程开工_别墅21#</span>
 								</dd>
 								<dd>
 									<span class="fs">施工节点：</span>
 									<span>工程开工_别墅21#</span>
 								</dd>
-								<dd>
+								<dd style="position: relative;">
 									<span class="fs">期 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>
 									<span>别墅22#</span>
-									<span class="fr state">已检查</span>
+									<span class="state">已检查</span>
 								</dd>
 							</dl>
 						</div>
@@ -37,9 +41,9 @@
 						<div class="info_bot clearfix">
 							<span>检查人：张晓天</span>
 							<span class="time">检查日期：2018-11-29</span>
-							<span class="delete fr">  
+							<span class="delete fr" @click="confirm()">  
 									<mu-button color="#ddd" small  icon>
-    									<mu-icon size="20" value="delete"></mu-icon>
+    									<mu-icon size="20" value="delete"  ></mu-icon>
   									</mu-button>					
 								</span>
 						</div>
@@ -61,35 +65,35 @@
 							<li class="clearfix punish_state">
 								<span class="fl">项目名称：</span>
 								<select filterable v-model="form.select_naem" prop="punish_state">
-									<option v-for="city,index in citys" :key="city" :label="city" :value="city"></option>
+									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">施工节点：</span>
 								<select filterable v-model="form.select_node" prop="punish_state">
-									<option v-for="city,index in citys" :key="city" :label="city" :value="city"></option>
+									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>
 								<select filterable v-model="form.select_area" prop="punish_state">
-									<option v-for="city,index in citys" :key="city" :label="city" :value="city"></option>
+									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</span>
 								<select filterable v-model="form.select_state" prop="punish_state">
-									<option v-for="city,index in citys" :key="city" :label="city" :value="city"></option>
+									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 						</ul>
 					</mu-form>
 					<div class="searchBox_btn clearfix">
 						<div class="btn-left fl">
-							<mu-button full-width @click="clear">重置</mu-button>
+							<mu-button full-width @click="clear" style="height:100%;font-size:16px;">重置</mu-button>
 						</div>
 						<div class="btn-right fr">
-							<mu-button full-width textColor="primary">查询</mu-button>
+							<mu-button full-width textColor="#0062cc" style="height:100%;font-size:16px;">查询</mu-button>
 						</div>
 					</div>
 				</div>
@@ -98,7 +102,7 @@
 		<div class="addExamine">
 			<mu-container class="button-wrapper">
 				<mu-flex justify-content="center" align-items="center">
-					<mu-button round color="primary" to="aqsc/addexamine">
+					<mu-button round color="primary" @click="goAdd()">
 						<mu-icon left value="add"></mu-icon>新增检查记录</mu-button>
 				</mu-flex>
 			</mu-container>
@@ -108,8 +112,14 @@
 
 <script>
 	import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
+	import 'muse-ui-message/dist/muse-ui-message.css';
 	import Vue from 'vue';
 	import Loading from 'muse-ui-loading';
+	import Message from 'muse-ui-message';
+	import Toast from 'muse-ui-toast';
+
+	Vue.use(Toast);
+	Vue.use(Message);
 	Vue.use(Loading);
 	export default {
 		name: 'Aqsc',
@@ -139,22 +149,45 @@
 			}
 		},
 		methods: {
-			fullscreen() {
-				const loading = this.$loading({
-					overlayColor: 'hsla(0,0,0,1)',
+			//返回首页
+			backHome() {
+				var self = this;
+				const loading = self.$loading({
+					overlayColor: 'hsla(0,0%,100%,.9)',
 					text: '正在跳转'
 				});
 				setTimeout(() => {
 					loading.close();
 				}, 1000)
+				this.$options.methods.backHomedrop.bind(this)();
 			},
-			addExaminedrop() {
+			backHomedrop() {
 				setTimeout(() => {
 					this.$router.push({
-						name: "Aqsc"
+						name: "Home"
 					})
 				}, 1000)
 			},
+			//跳转增加检查纪录
+			goAdd() {
+				var self = this;
+				const loading = self.$loading({
+					overlayColor: 'hsla(0,0%,100%,.9)',
+					text: '正在跳转'
+				});
+				setTimeout(() => {
+					loading.close();
+				}, 1000)
+				this.$options.methods.drop.bind(this)();
+			},
+			drop() {
+				setTimeout(() => {
+					this.$router.push({
+						name: "Addexamine"
+					})
+				}, 1000)
+			},
+			//清空搜索框
 			clear() {
 				this.$refs.form.clear();
 				this.form = {
@@ -164,7 +197,22 @@
 					select_state: '全部',
 					date: '',
 				};
-			}
+			},
+			//删除提示
+			confirm() {
+				this.$confirm('删除此验收单将连带删除相关验收项纪录？', '提示', {
+					type: 'warning',
+					icon: '',
+				}).then(({
+					result
+				}) => {
+					if(result) {
+						this.$toast.message('已删除');
+					} else {
+						this.$toast.message('已取消');
+					}
+				});
+			},
 		}
 	}
 </script>
@@ -172,19 +220,29 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 	@import '../../styles/main.less';
-	.headerFixed {
-		.h(56);
+	/*头部*/
+	.header{
 		position: fixed;
 		top: 0;
+		color:#fff;
 		z-index: 999;
 		.w(375);
+		.h(48);
+		background:#1B8EE9;
+		.header_center{
+			.lh(48);
+			.fs(16);
+			.padding-left(105);
+			font-weight: bold;
+		}
 	}
+	/*列表*/
 	
 	.content {
-		.margin-top(56);
+		.margin-top(48);
 		.title {
 			position: fixed;
-			top: 56px;
+			.top(48);
 			z-index: 999;
 			.w(375);
 			.h(35);
@@ -196,11 +254,12 @@
 			.fs(14);
 		}
 		ul {
-			.margin-top(91);
+			.margin-top(83);
 			.padding(15, 10, 80, 10);
 			width: 100%;
 			background: #fafafa;
 			li {
+				.fs(14);
 				.border-radius(10);
 				background: #fff;
 				.margin-bottom(10);
@@ -208,16 +267,26 @@
 					dl {
 						.padding(5, 5, 5, 5);
 						dd {
+							 display: table;
+							.padding(2,5,2,10);
+							span{
+								display: table-cell;
+								.lh(24);
+								color:#212121;
+							}
 							.fs {
 								color: #666;
+								.w(72);
 							}
 							.state {
+								position:absolute;
+								top:0;
+								.right(-200);
 								.fs(14);
 								.lh(24);
 								.w(60);
 								.h(24);
 								background: #fbdcda;
-								.margin-right(5);
 								text-align: center;
 								color: #F04844;
 								.border-radius(10);
@@ -229,7 +298,8 @@
 					/*		.margin(5, 0, 5, 0);*/
 					.lh(33);
 					color: #666;
-					.fs(14);
+					.fs(12);
+					.padding(0,0,0,10);
 					border-bottom-right-radius: 5px;
 					border-bottom-left-radius: 5px;
 					.time {
@@ -243,18 +313,19 @@
 			}
 		}
 	}
+	/*搜索盒子*/
 	
 	.searchBox {
 		position: fixed;
 		z-index: 999;
-		.top(56);
+		.top(45);
 		right: 0;
 		.w(375);
-		.h(611);
-		background: rgba(127,127,127,0.7);
+		.h(622);
+		background: rgba(127, 127, 127, 0.7);
 		border: 1px solid #ccc;
 		.searchContent {
-			.padding(0, 10, 10, 10);
+			.padding(0, 10, 12, 10);
 			background: #fff;
 			ul {
 				width: 100%;
@@ -292,24 +363,29 @@
 				}
 			}
 			.searchBox_btn {
+				.h(45);
 				width: 100%;
 				position: absolute;
 				/*.bottom(0);*/
 				/*bottom: 322px;*/
-				.bottom(322);
+				.bottom(323);
 				left: 0;
 				.btn-left {
+					height: 100%;
 					width: 50%;
 				}
 				.btn-right {
+					height: 100%;
 					width: 50%;
 				}
 			}
 		}
-	}	
+	}
+	/*新增按钮*/
+	
 	.addExamine {
 		.w(375);
-		background: rgba(255,255,255,0.7);
+		background: rgba(255, 255, 255, 0.7);
 		position: fixed;
 		.bottom(0);
 		.button-wrapper {

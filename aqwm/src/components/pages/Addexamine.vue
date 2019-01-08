@@ -1,255 +1,348 @@
 <template>
 	<div class="addexamine">
-		<div class="header headerFixed">
-			<mu-appbar style="width: 100%;" color="primary">
-				<mu-button icon slot="left" to="/home/aqsc">
+		<div class="header clearfix">
+			<div class="header_left fl">
+				<mu-button icon slot="left" @click="backAqsc()">
 					<mu-icon size="36" value="chevron_left"></mu-icon>
 				</mu-button>
-				添加检查记录
-			</mu-appbar>
+			</div>
+			<div class="header_right fl">
+				新增检查
+			</div>
 		</div>
 		<!--检查项-->
 		<div class="check_item">
-			<div class="check_item_title">
-				<span>新增检查记录</span>
-			</div>
 			<div class="form-check_item">
 				<mu-form :model="form" class="mu-demo-form" label-position="left" label-width="100">
 					<ul>
-						<li class="punish_time clearfix">
-							<span class="fl">检查时间：</span>
-							<!--<mu-date-input v-model="form.date" class="fr" type="dateTime" actions></mu-date-input>-->
-							<input type="date" name="" id="" value="" v-model="form.date" />
+						<li>
+							<div class="title">选择检查项目</div>
 						</li>
-						<li class="clearfix punish_num">
-							<span class="fl">项目编号:</span>
-							<select filterable v-model="form.select_num" prop="punish_state">
-								<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-							</select>
+						<li class="punish_time">
+							<div class="inner clearfix">
+								<span class="fl">检查时间</span>
+								<input class="fl" type="date" name="" id="" value="" v-model="form.date" />
+							</div>
 						</li>
-						<li class="clearfix punish_name">
-							<span class="fl">项目名称：</span>
-							<select filterable v-model="form.select_name" prop="punish_state" @change="showEntry">
-								<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-							</select>
+						<li class=" punish_num">
+							<div class="inner clearfix">
+								<span class="fl">项目编号</span>
+								<select class="fl" filterable v-model="form.select_num" prop="punish_state" style="appearance: none;
+						-webkit-appearance: none;">
+									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
+								</select>
+							</div>
 						</li>
-						<li class="clearfix punish_node">
-							<span class="fl">施工节点：</span>
-							<select filterable v-model="form.select_node" prop="punish_state">
-								<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-							</select>
+						<li class=" punish_name">
+							<div class="inner clearfix">
+								<span class="fl">项目名称</span>
+								<div id="" @click="isShow1=!isShow1">
+									<input class="fl" id="currentXmmc" type="text" placeholder="输入项目编号或名称查询" readonly="readonly">
+									<div class="dot clearfix">
+										<i></i>
+										<p></p>
+										<i></i>
+									</div>
+								</div>
+							</div>
 						</li>
-						<li class="clearfix punish_state">
-							<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>
-							<select filterable v-model="form.select_area" prop="punish_state">
-								<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
-							</select>
+						<li class=" punish_node">
+							<div class="inner clearfix">
+								<span class="fl">施工节点</span>
+								<select class="fl" filterable v-model="form.select_node" prop="punish_state" style="appearance: none;
+						-webkit-appearance: none;">
+									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
+								</select>
+							</div>
+						</li>
+						<li class="punish_area">
+							<div class="inner clearfix">
+								<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区</span>
+								<select class="fl" filterable v-model="form.select_area" prop="punish_area" style="appearance: none;
+						-webkit-appearance: none;">
+									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
+								</select>
+							</div>
+						</li>
+						<li>
+							<div class="title">选择检查点</div>
+						</li>
+						<li>
+							<div class="inner clearfix">
+								<div id="" @click="isShow2=!isShow2">
+									<span class="fl">检查分项</span>
+									<input class="fl" id="currentXmmc" type="text" placeholder="请选择" readonly="readonly">
+									<div class="dot clearfix">
+										<i></i>
+										<p></p>
+										<i></i>
+									</div>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</mu-form>
 			</div>
 		</div>
-		<!--选择检查点-->
-		<div class="check_entry" v-show="showEntrybox">
-			<div class="check_entry_title">
-				<span>选择检查点</span>
-			</div>
-			<div class="form-check_entry">
-				<ul class="form-check_entry_first">
-					<li v-for="(item,index) in titleList" :key="index">
-						<label :for="item.id">
-						<input :id="item.id" type="checkbox" @click.stop="checkAll($event,index)" />{{item.title}}
-						</label>
-						<mu-icon :value="isShow&&index===indexs? 'keyboard_arrow_up' :'keyboard_arrow_down'" size="30" color="blue" @click.stop="showSecond(index)"></mu-icon>
-						<div class="form-check_entry_second" v-show="isShow&&index===indexs">
-							<ul>
-								<li>
-									<label v-if="index==0" v-for="(item,indx1) in ajaxData1" :key="indx1">
-										<mu-icon value="keyboard_arrow_right" size="30" color="#ccc"></mu-icon>
-										<input class="checkItem" type="checkbox" :value="item.value" v-model="checkData1"/>{{item.name}}
-									</label>
-									<label v-if="index==1" v-for="(item,indx2) in ajaxData2" :key="indx2">
-										<mu-icon value="keyboard_arrow_right" size="30" color="#ccc"></mu-icon>
-										<input class="checkItem" type="checkbox" :value="item.value" v-model="checkData2"/>{{item.name}}
-									</label>
-									<label v-if="index==2" v-for="(item,indx3) in ajaxData3" :key="indx3">
-										<mu-icon value="keyboard_arrow_right" size="30" color="#ccc"></mu-icon>
-										<input class="checkItem" type="checkbox" :value="item.value" v-model="checkData3"/>{{item.name}}
-									</label>
-								</li>
-							</ul>
-						</div>
+		<div class="showXMname" v-show="isShow1">
+			<div class="set_project">
+				<div class="set_title">
+					<i class="material-icons" @click="isShow1=false">close</i>
+					<span>选择检查项目</span>
+				</div>
+				<div class="searchbar">
+					<div class="searchInput">
+						<i class="material-icons findname">search</i>
+						<input type="text" ref="input1" @keyup="showClearbtn" placeholder="输入项目编号或名称查询" id="search-input">
+						<i class="material-icons clearInput" v-show="showClear" @click="clearInput">close</i>
+					</div>
+				</div>
+				<ul class="project_list">
+					<li v-for="(n,index) in 30" :key="index">
+						<span>ZN010010001|总承包珠江温泉项目_广州</span>
 					</li>
 				</ul>
 			</div>
+		</div>
+		<div class="showFX" v-show="isShow2">
+			<div class="set_project">
+				<div class="set_title">
+					<i class="material-icons" @click="isShow2=false">close</i>
+					<span>选择检查分项</span>
+				</div>
+				<div class="tab_content">
+					<!--<ul class="clearfix">
+						<li @click="tab(index)" v-for="(item,index) in items" :class="{active : index===curId}">{{item.name}}</li>
+					</ul>
+					<div class="tab-con">
+						<div v-show="index===curId" v-for="(content, index) in contents">{{content.content}}</div>
+					</div>-->
+					<ul class="tabs clearfix">
+						<li v-for="(tab,index) in tabsName">
+							<div class="tab-link" @click="tabsSwitch(index)" v-bind:class="{active:tab.isActive}">{{tab.name}}</div>
+						</li>
+					</ul>
+					<div class="cards">
+						<div class="tab-card" style="display: block;">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>主体结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>地基与基础</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-card">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>砌体结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>钢结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>混泥土结构</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-card">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>石砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>填充墙砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>混凝土小型空心砌块砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>配筋砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+								<li>
+									<div class="clearfix">
+										<span>砖砌体</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-card">
+							<ul class="clearfix tab-card_content">
+								<li>
+									<div class="clearfix">
+										<span>石砌体质量检验记录</span>
+										<mu-icon value="done" color="blue" size="24"></mu-icon>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="submit_btn" @click="goYsjl()">
+			<button>确认并开始检查</button>
 		</div>
 	</div>
 </template>
 
 <script>
+	import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
+	import Vue from 'vue';
+	import Loading from 'muse-ui-loading';
+	Vue.use(Loading);
 	export default {
 		name: 'Addexamine',
 		data() {
 			return {
 				msg: '添加检查记录',
-				isShow: false,
-				showEntrybox: false,
+				tabsName: [{
+						name: "分部工程",
+						isActive: true
+					}, {
+						name: "子分部工程",
+						isActive: false
+					}, {
+						name: "分项工程",
+						isActive: false
+					},
+					{
+						name: "检查记录",
+						isActive: false
+					}
+				],
+				active: false,
+				isShow1: false,
+				isShow2: false,
+				showClear: false,
+				istrue: 0,
+				items: [{
+						name: '分部工程'
+					},
+					{
+						name: '子分部工程'
+					},
+					{
+						name: '分项工程'
+					},
+					{
+						name: '检查记录'
+					}
+				],
 				options: [
-					'请选择', 'Option 1', 'Option 2', 'Option 3', 'Option 4',
+					'请选择', '段', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Z111213213',
 					'Option 5', 'Option 6', 'Option 7', 'Option 8',
 					'Option 9', 'Option 10'
 				],
 				form: {
-					select_num: '',
+					select_num: 'Z111213213',
 					select_name: '请选择',
 					select_node: '',
 					select_area: '',
+					select_jyprl: '段',
 					date: '',
 				},
-				titleList: [{
-						id: 'quan1',
-						title: '封闭管理'
-					},
-					{
-						id: 'quan2',
-						title: '地面道路及排水设置'
-					},
-					{
-						id: 'quan3',
-						title: '材料堆放'
-					}
-				],
-				ajaxData1: [{ // 后台请求过来的数据
-					name: '施工主路口临时大门',
-					value: 'a'
-				}, {
-					name: '现场围挡',
-					value: 'b'
-				}, {
-					name: '门卫室',
-					value: 'c'
-				}, {
-					name: '安全生产指示牌',
-					value: 'd'
-				}],
-				ajaxData2: [{ // 后台请求过来的数据
-					name: 'pm2.5',
-					value: 'a'
-				}, {
-					name: 'pm2.5',
-					value: 'b'
-				}, {
-					name: 'pm2.5',
-					value: 'c'
-				}, {
-					name: 'pm2.5',
-					value: 'd'
-				}],
-				ajaxData3: [{ // 后台请求过来的数据
-					name: 'pm88',
-					value: 'a'
-				}, {
-					name: 'pm88',
-					value: 'b'
-				}, {
-					name: 'pm88',
-					value: 'c'
-				}, {
-					name: 'pm88',
-					value: 'd'
-				}],
-				checkData1: [], // 双向数据绑定的数组
-				checkData2: [], // 双向数据绑定的数组
-				checkData3: [], // 双向数据绑定的数组
-			}
-		},
-		watch: {
-			checkData1: { // 监视双向绑定的数组变化
-				handler() {
-					if(this.checkData1.length == this.ajaxData1.length) {
-						document.querySelector('#quan1').checked = true;
-					} else {
-						document.querySelector('#quan1').checked = false;
-					}
-				},
-				deep: true
-			},
-			checkData2: { // 监视双向绑定的数组变化
-				handler() {
-					if(this.checkData2.length == this.ajaxData2.length) {
-						document.querySelector('#quan2').checked = true;
-					} else {
-						document.querySelector('#quan2').checked = false;
-					}
-				},
-				deep: true
-			},
-			checkData3: { // 监视双向绑定的数组变化
-				handler() {
-					if(this.checkData3.length == this.ajaxData3.length) {
-						document.querySelector('#quan3').checked = true;
-					} else {
-						document.querySelector('#quan3').checked = false;
-					}
-				},
-				deep: true
 			}
 		},
 		methods: {
-			showSecond(index) {
-				//console.log(index);
+			//选项卡切换
+			tabsSwitch: function(tabIndex) {
 
-				if(this.isShow == true && this.indexs != index) {
-					this.isShow = false;
+				var tabCardCollection = document.querySelectorAll(".tab-card"),
+					len = tabCardCollection.length;
+
+				for(var i = 0; i < len; i++) {
+					tabCardCollection[i].style.display = "none";
+					this.tabsName[i].isActive = false;
 				}
-				this.isShow = !this.isShow;
-				this.indexs = index;
+				this.tabsName[tabIndex].isActive = true;
+				tabCardCollection[tabIndex].style.display = "block";
 			},
-			showEntry() {
-				console.log(this.form.select_name)
-				if(this.form.select_name != '请选择') {
-					this.showEntrybox = true;
+			tab(index) {
+				this.curId = index;
+				console.log(this.curId)
+			},
+			//返回上一页
+			backAqsc() {
+				var self = this;
+				const loading = self.$loading({
+					overlayColor: 'hsla(0,0%,100%,.9)',
+					text: '正在跳转'
+				});
+				setTimeout(() => {
+					loading.close();
+				}, 1000)
+				this.$options.methods.backAqscdrop.bind(this)();
+			},
+			backAqscdrop() {
+				setTimeout(() => {
+					this.$router.push({
+						name: "Aqsc"
+					})
+				}, 1000)
+			},
+			//前往验收记录页面
+			goYsjl() {
+				var self = this;
+				const loading = self.$loading({
+					overlayColor: 'hsla(0,0%,100%,.9)',
+					text: '正在跳转'
+				});
+				setTimeout(() => {
+					loading.close();
+				}, 1000)
+				this.$options.methods.goYsjldrop.bind(this)();
+			},
+			goYsjldrop() {
+				setTimeout(() => {
+					this.$router.replace({
+						name: "Ysjl"
+					})
+				}, 1000)
+			},
+			//显示input清除按钮
+			showClearbtn() {
+				console.log(this.$refs.input1.value)
+				if(this.$refs.input1.value != '') {
+					this.showClear = true;
 				} else {
-					this.showEntrybox = false;
+					this.showClear = false;
 				}
-			},
-			checkAll(e, indx) { // 点击全选事件
-				if(indx == 0) {
-					if(e.target.checked) {
-						this.ajaxData1.forEach((el, i) => {
-							// 数组里没有这一个value才push，防止重复push
-							if(this.checkData1.indexOf(el.value) == '-1') {
-								this.checkData1.push(el.value);
-							}
-						});
-					} else { // 全不选选则清空绑定的数组
-						this.checkData1 = [];
-					}
-				}else if(indx == 1 ){
-					if(e.target.checked) {
-						this.ajaxData2.forEach((el, i) => {
-							// 数组里没有这一个value才push，防止重复push
-							if(this.checkData2.indexOf(el.value) == '-1') {
-								this.checkData2.push(el.value);
-							}
-						});
-					} else { // 全不选选则清空绑定的数组
-						this.checkData2= [];
-					}
-				}else if(indx == 2){
-					if(e.target.checked) {
-						this.ajaxData3.forEach((el, i) => {
-							// 数组里没有这一个value才push，防止重复push
-							if(this.checkData3.indexOf(el.value) == '-1') {
-								this.checkData3.push(el.value);
-							}
-						});
-					} else { // 全不选选则清空绑定的数组
-						this.checkData3= [];
-					}
-				}
-			}
 
+			},
+			//清除input内容
+			clearInput() {
+				this.$refs.input1.value = "";
+			}
 		}
 	}
 </script>
@@ -257,118 +350,389 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 	@import '../../styles/main.less';
-	.headerFixed {
+	.header {
 		position: fixed;
 		top: 0;
+		color: #fff;
 		z-index: 999;
 		.w(375);
+		.h(48);
+		background: #03a9f4;
+		.header_right {
+			.lh(48);
+			.fs(16);
+			.padding-left(105);
+			font-weight: bold;
+		}
 	}
 	
-	.check_item {
-		.margin-top(56);
-		.padding(5, 0, 5, 0);
-		.check_item_title {
+	.title {
+		position: relative;
+		color: #212121;
+		font-weight: bold;
+		background: #f5f5f5;
+		border-bottom: 1px solid #e8e8e8;
+		.fs(14);
+		.padding(12, 15, 8, 15);
+		.show_gallery {
+			.w(94);
+			.fs(14);
 			.h(30);
 			.lh(30);
 			text-align: center;
-			.margin-bottom(5);
+			.padding(0, 6, 0, 6);
+			color: #03a9f4;
+			border: 1px solid #03a9f4;
+			position: absolute;
+			.top(7);
+			.left(255);
 		}
+	}
+	
+	.check_item {
+		.margin-top(48);
 		.form-check_item {
 			background: #fff;
-			.padding(0, 5, 5, 5);
 			ul {
+				.margin-bottom(50);
 				width: 100%;
 				li {
-					.h(48);
-					position: relative;
+					.inner {
+						.h(44);
+						.padding-left(15);
+						position: relative;
+						.lh(44);
+					}
 					span {
-						position: absolute;
-						.left(7);
-						.top(17);
+						color: #666666;
+						.margin-right(10);
 					}
 					select {
-						position: absolute;
-						border-radius: 5px;
-						border-color: #E9E9E9;
+						border: none;
+						/*appearance: none;*/
+						/*-webkit-appearance: none;*/
+						.w(260);
+						.h(44);
+						/*.padding-left(10);*/
+						.margin-left(5);
+						.fs(16);
+						color: #333333;
+					}
+					input {
+						border: none;
 						.top(10);
 						right: 0;
-						.w(255);
-						.h(38);
+						/*.w(270);*/
+						.h(44);
 						.margin-right(5);
+						.fs(16);
+						color: #333333;
+					}
+					.dot {
+						position: absolute;
+						.left(330);
+						.top(20);
+						text-align: right;
+						i {
+							display: block;
+							background: #e4e4e4;
+							width: 4px;
+							height: 4px;
+							border-radius: 6px;
+							float: left;
+							margin-top: 1px;
+						}
+						p {
+							width: 6px;
+							height: 6px;
+							background: #AEAEAE;
+							border-radius: 6px;
+							margin: 0 2px;
+							float: left;
+						}
 					}
 				}
 				.punish_time {
 					input {
-						position: absolute;
-						border: 1px solid #E9E9E9;
-						.top(10);
-						right: 0;
 						margin: 0;
 						padding: 0;
 						.margin-right(5);
+						.fs(16);
+						color: #333333;
 						.w(255);
-						.h(38);
+						.h(44);
 						border-radius: 5px;
 						border-color: #E9E9E9;
+					}
+				}
+				.punish_jyprl {
+					position: relative;
+					select {
+						position: absolute;
+						.w(100);
+						top: 0;
+						.left(260);
+					}
+				}
+				.punish_pic {
+					.padding(10, 10, 10, 10);
+					.pic {
+						.margin(0, -2.5, 0, -2.5);
+						div {
+							position: relative;
+							.w(120);
+							.h(86);
+							.padding(2.5, 2.5, 2.5, 2.5);
+							i {
+								display: block;
+								.w(30);
+								.h(30);
+								position: absolute;
+								/*top: 0;
+								right: 0;*/
+								color: #fff;
+								right: 0.125rem;
+								top: 0.125rem;
+								text-align: center;
+								background: rgba(0, 0, 0, 0.4);
+								border-bottom-left-radius: 1rem;
+							}
+							img {
+								width: 100%;
+								height: 100%;
+							}
+						}
+						.addPic {
+							border: 1px solid #ccc;
+							position: relative;
+							i {
+								.w(30);
+								.h(30);
+								font-weight: bold;
+								border-bottom-left-radius: 0;
+								background: #fff;
+								color: #9999;
+								position: absolute;
+								.top(8);
+								.left(42);
+							}
+							p {
+								position: absolute;
+								.top(40);
+								.left(24);
+								color: #999;
+							}
+						}
 					}
 				}
 			}
 		}
 	}
 	
-	.check_entry {
-		.padding(5, 0, 5, 0);
-		.check_entry_title {
-			.h(30);
-			.lh(30);
-			text-align: center;
-			.margin-bottom(5);
+	.submit_btn {
+		.h(50);
+		.fs(16);
+		font-weight: bold;
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		button {
+			background: #1B8EE9;
+			color: #fff;
+			display: block;
+			width: 100%;
+			height: 100%;
 		}
-		.form-check_entry {
+	}
+	
+	.showXMname {
+		z-index: 1111;
+		overflow: scroll;
+		.w(375);
+		position: fixed;
+		.top(48);
+		left: 0;
+		.h(619);
+		background: rgba(0, 0, 0, 0.5);
+		.set_project {
 			background: #fff;
-			.padding(0, 5, 5, 5)
-		}
-		.form-check_entry_first {
-			li {
+			height: 70vh;
+			position: fixed;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			.set_title {
+				.h(45);
+				.lh(45);
 				position: relative;
-				.lh(30);
-				.padding-left(15);
-				input {
-					display: inline-block;
-					.w(15);
-					.h(15);
-				}
-				span {
-					display: inline-block;
-					.h(30);
-					.padding-left(10);
-					.lh(30);
-				}
+				border-bottom: 1px solid #e8e8e8;
 				i {
 					position: absolute;
-					.right(5);
+					.top(9);
+					.left(7);
+					color: #999;
+					.fs(26);
+				}
+				span {
+					position: absolute;
+					top: 0;
+					.left(130);
+				}
+			}
+			.searchbar {
+				z-index: 9999;
+				display: -webkit-box;
+				-webkit-box-pack: center;
+				-webkit-box-align: center;
+				.h(44);
+				overflow: hidden;
+				width: 100%;
+				background-color: #ebeced;
+				color: #9e9e9e;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+				.searchInput {
+					.margin(0, 10, 0, 10);
+					.padding-left(10);
+					.h(28);
+					background-color: #ffffff;
+					.border-radius(5);
+					position: relative;
+					display: -webkit-box;
+					-webkit-box-flex: 1;
+					position: relative;
+					.findname {
+						position: absolute;
+						.top(3);
+						.left(5);
+					}
+					input {
+						.fs(14);
+						position: absolute;
+						.w(280);
+						.top(5);
+						.left(37);
+					}
+					.clearInput {
+						position: absolute;
+						.top(5);
+						.right(5);
+						border-radius: 50%;
+						background: #999;
+						color: #fff;
+						.fs(18);
+					}
+				}
+			}
+			.project_list {
+				.padding-left(15);
+				.fs(14);
+				overflow: scroll;
+				position: absolute;
+				.top(90);
+				left: 0;
+				right: 0;
+				bottom: 0;
+				.padding-bottom(4);
+				li {
+					.lh(24);
+					border-bottom: 1px solid #e8e8e8;
+					.padding(10, 0, 10, 0);
+					align-items: center;
 				}
 			}
 		}
-		.form-check_entry_second {
-			li {
+	}
+	
+	.showFX {
+		z-index: 1111;
+		overflow: scroll;
+		.w(375);
+		position: fixed;
+		.top(48);
+		left: 0;
+		.h(619);
+		background: rgba(0, 0, 0, 0.5);
+		.set_project {
+			background: #fff;
+			height: 70vh;
+			position: fixed;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			.set_title {
+				.h(45);
+				.lh(45);
 				position: relative;
-				.lh(30);
-				.padding-left(25);
-				label {
-					display: inline-block;
-					.w(330);
-					input {
-						display: inline-block;
-						.margin-left(15);
-						.margin-right(15);
-						.w(15);
-						.h(15);
-					}
-				}
+				border-bottom: 1px solid #e8e8e8;
 				i {
 					position: absolute;
-					.left(5);
+					.top(9);
+					.left(7);
+					color: #999;
+					.fs(26);
+				}
+				span {
+					position: absolute;
+					top: 0;
+					.left(130);
+				}
+			}
+			.tab_content {
+				.active {
+					.h(44);
+					border-bottom: 2px solid #039be5;
+				}
+				ul {
+					border-bottom: 1px solid #ccc;
+					li {
+						.h(44);
+						.lh(44);
+						color: rgb(222, 222, 222);
+						width: 25%;
+						text-align: center;
+						float: left;
+						.fs(14);
+						.tab-link {
+							display: block;
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
+				.cards {
+					float: left;
+					.w(375);
+					.tab-card {
+						width: 100%;
+						height: 100%;
+						display: none;
+						.tab-card_content {
+							width: 100%;
+							border: none;
+							li {
+								width: 100%;
+								div {
+									.w(365);
+									.margin-left(10);
+									border-bottom: 1px solid #e8e8e8;
+									position: relative;
+									span {
+										float: left;
+										color: #212121;
+										.fs(14);
+									}
+									i {
+										position: absolute;
+										.top(5);
+										.right(20);
+										font-weight: bold;
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
