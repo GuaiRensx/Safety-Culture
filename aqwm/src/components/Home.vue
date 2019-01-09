@@ -99,12 +99,12 @@
 		color:#fff;
 		z-index: 999;
 		.w(375);
-		.h(48);
+		.h(45);
 		background:#1B8EE9;
 		.header_right{
-			.lh(48);
+			.lh(45);
 			.fs(16);
-			.padding-left(105);
+			.padding-left(100);
 			font-weight: bold;
 		}
 	}

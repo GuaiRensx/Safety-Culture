@@ -27,7 +27,7 @@
 						<li class=" punish_num">
 							<div class="inner clearfix">
 								<span class="fl">项目编号</span>
-								<select class="fl" filterable v-model="form.select_num" prop="punish_state" style="appearance: none;
+								<select class="fl" v-model="form.select_num" prop="punish_state" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -49,7 +49,7 @@
 						<li class=" punish_node">
 							<div class="inner clearfix">
 								<span class="fl">施工节点</span>
-								<select class="fl" filterable v-model="form.select_node" prop="punish_state" style="appearance: none;
+								<select class="fl" v-model="form.select_node" prop="punish_state" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -58,7 +58,7 @@
 						<li class="punish_area">
 							<div class="inner clearfix">
 								<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区</span>
-								<select class="fl" filterable v-model="form.select_area" prop="punish_area" style="appearance: none;
+								<select class="fl" v-model="form.select_area" prop="punish_area" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -222,7 +222,7 @@
 										<mu-icon value="done" color="blue" size="24"></mu-icon>
 									</div>
 								</li>
-									<li>
+								<li>
 									<div class="clearfix">
 										<span>配筋砌体</span>
 										<mu-icon value="done" color="blue" size="24"></mu-icon>
@@ -376,12 +376,12 @@
 		color: #fff;
 		z-index: 999;
 		.w(375);
-		.h(48);
+		.h(45);
 		background: #03a9f4;
 		.header_right {
-			.lh(48);
+			.lh(45);
 			.fs(16);
-			.padding-left(105);
+			.padding-left(95);
 			font-weight: bold;
 		}
 	}
@@ -410,7 +410,7 @@
 	}
 	
 	.check_item {
-		.margin-top(48);
+		.margin-top(45);
 		.form-check_item {
 			background: #fff;
 			ul {
@@ -429,22 +429,20 @@
 					}
 					select {
 						border: none;
-						/*appearance: none;*/
-						/*-webkit-appearance: none;*/
 						.w(260);
 						.h(44);
-						/*.padding-left(10);*/
 						.margin-left(5);
 						.fs(16);
 						color: #333333;
+						background: #fff;
 					}
 					input {
 						border: none;
 						.top(10);
 						right: 0;
-						/*.w(270);*/
+						.w(260);
 						.h(44);
-						.margin-right(5);
+						.margin-left(5);
 						.fs(16);
 						color: #333333;
 					}
@@ -476,10 +474,11 @@
 					input {
 						margin: 0;
 						padding: 0;
-						.margin-right(5);
+						.margin-left(5);
 						.fs(16);
 						color: #333333;
-						.w(255);
+						background: #fff;
+						.w(260);
 						.h(44);
 						border-radius: 5px;
 						border-color: #E9E9E9;
@@ -728,22 +727,22 @@
 						width: 100%;
 						height: 100%;
 						display: none;
-						.tab-card_content{
+						.tab-card_content {
 							width: 100%;
 							border: none;
-							li{
+							li {
 								width: 100%;
-								div{
+								div {
 									.w(365);
 									.margin-left(10);
 									border-bottom: 1px solid #e8e8e8;
 									position: relative;
-									span{
+									span {
 										float: left;
 										color: #212121;
 										.fs(14);
 									}
-									i{
+									i {
 										position: absolute;
 										.top(5);
 										.right(20);

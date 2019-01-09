@@ -8,6 +8,7 @@ import Addexamine from '@/components/pages/Addexamine'
 import Addpunish from '@/components/pages/Addpunish'
 import Addwmsg from '@/components/pages/Addwmsg'
 import Ysjl from '@/components/pages/Ysjl'
+import Detail from '@/components/pages/Detail'
 
 
 Vue.use(Router)
@@ -57,6 +58,11 @@ export default new Router({
 			path: '/home/aqsc/addexamine/ysjl', //path:匹配的hash地址
 			name: 'Ysjl', //路由的名字
 			component: Ysjl //该路由所引用的组件的名字
+		},
+										{
+			path: '/home/aqsc/addexamine/ysjl/detail', //path:匹配的hash地址
+			name: 'Detail', //路由的名字
+			component: Detail //该路由所引用的组件的名字
 		},
   ]
 })

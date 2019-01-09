@@ -55,7 +55,7 @@
 		<mu-slide-right-transition>
 			<div class="searchBox" v-show="show1">
 				<div class="searchContent">
-					<mu-form ref="form" class="mu-demo-form" :model="filterable">
+					<mu-form ref="form" class="mu-demo-form" :model="form">
 						<ul>
 							<li class="punish_time clearfix">
 								<span class="fl">检查时间：</span>
@@ -64,25 +64,25 @@
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">项目名称：</span>
-								<select filterable v-model="form.select_naem" prop="punish_state">
+								<select v-model="form.select_naem" prop="punish_state">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">施工节点：</span>
-								<select filterable v-model="form.select_node" prop="punish_state">
+								<select v-model="form.select_node" prop="punish_state">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>
-								<select filterable v-model="form.select_area" prop="punish_state">
+								<select v-model="form.select_area" prop="punish_state">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_state">
 								<span class="fl">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</span>
-								<select filterable v-model="form.select_state" prop="punish_state">
+								<select v-model="form.select_state" prop="punish_state">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
@@ -163,11 +163,6 @@
 					"Wisconsin",
 					"Wyoming"
 				],
-				filterable: {
-					value1: "",
-					value2: [],
-					value3: []
-				},
 				form: {
 					select_name: "",
 					select_node: "",
@@ -253,12 +248,12 @@
 		color: #fff;
 		z-index: 999;
 		.w(375);
-		.h(48);
+		.h(45);
 		background: #1B8EE9;
 		.header_center {
-			.lh(48);
+			.lh(45);
 			.fs(16);
-			.padding-left(105);
+			.padding-left(95);
 			font-weight: bold;
 		}
 	}

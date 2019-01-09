@@ -27,7 +27,7 @@
 						<li class=" punish_num">
 							<div class="inner clearfix">
 								<span class="fl">项目编号</span>
-								<select class="fl" filterable v-model="form.select_num" prop="punish_num" style="appearance: none;
+								<select class="fl" v-model="form.select_num" prop="punish_num" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -46,7 +46,7 @@
 						<li class=" punish_node">
 							<div class="inner clearfix">
 								<span class="fl">施工节点</span>
-								<select class="fl" filterable v-model="form.select_node" prop="punish_node" style="appearance: none;
+								<select class="fl" v-model="form.select_node" prop="punish_node" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -55,7 +55,7 @@
 						<li class="punish_area">
 							<div class="inner clearfix">
 								<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区</span>
-								<select class="fl" filterable v-model="form.select_area" prop="punish_area" style="appearance: none;
+								<select class="fl" v-model="form.select_area" prop="punish_area" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -64,7 +64,7 @@
 						<li class=" punish_item">
 							<div class="inner clearfix">
 								<span class="fl">处罚条款</span>
-								<select class="fl" filterable v-model="form.select_item" prop="punish_item" style="appearance: none;
+								<select class="fl" v-model="form.select_item" prop="punish_item" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -73,7 +73,7 @@
 						<li class=" punish_unit">
 							<div class="inner clearfix">
 								<span class="fl">被处罚单位</span>
-								<select class="fl" filterable v-model="form.select_unit" prop="punish_unit" style="appearance: none;
+								<select class="fl" v-model="form.select_unit" prop="punish_unit" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -82,7 +82,7 @@
 						<li class=" punish_pep">
 							<div class="inner clearfix">
 								<span class="fl">被处罚人</span>
-								<select class="fl" filterable v-model="form.select_pep" prop="punish_pep" style="appearance: none;
+								<select class="fl" v-model="form.select_pep" prop="punish_pep" style="appearance: none;
 						-webkit-appearance: none;">
 									<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 								</select>
@@ -98,7 +98,7 @@
 								<li class=" punish_source">
 									<div class="inner clearfix">
 										<span class="fl">处罚来源</span>
-										<select class="fl" filterable v-model="form.oldselect_source" prop="punish_source" style="appearance: none;
+										<select class="fl" v-model="form.oldselect_source" prop="punish_source" style="appearance: none;
 						-webkit-appearance: none;">
 											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 										</select>
@@ -113,7 +113,7 @@
 								<li class=" punish_nature">
 									<div class="inner clearfix">
 										<span class="fl">处罚性质</span>
-										<select class="fl" filterable v-model="form.oldselect_nature" prop="punish_nature" style="appearance: none;
+										<select class="fl" v-model="form.oldselect_nature" prop="punish_nature" style="appearance: none;
 						-webkit-appearance: none;">
 											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 										</select>
@@ -122,7 +122,7 @@
 								<li class=" punish_sum">
 									<div class="inner clearfix">
 										<span class="fl">处罚金额</span>
-										<select class="fl" filterable v-model="form.oldselect_sum" prop="punish_sum" style="appearance: none;
+										<select class="fl" v-model="form.oldselect_sum" prop="punish_sum" style="appearance: none;
 						-webkit-appearance: none;">
 											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 										</select>
@@ -161,7 +161,7 @@
 								<li class=" punish_source">
 									<div class="inner clearfix">
 										<span class="fl">处罚来源</span>
-										<select class="fl" filterable v-model="form.nowSelect_source" prop="punish_source" style="appearance: none;
+										<select class="fl" v-model="form.nowSelect_source" prop="punish_source" style="appearance: none;
 						-webkit-appearance: none;">
 											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 										</select>
@@ -170,7 +170,7 @@
 								<li class=" punish_nature">
 									<div class="inner clearfix">
 										<span class="fl">处罚性质</span>
-										<select class="fl" filterable v-model="form.nowSelect_nature" prop="punish_nature" style="appearance: none;
+										<select class="fl" v-model="form.nowSelect_nature" prop="punish_nature" style="appearance: none;
 						-webkit-appearance: none;">
 											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 										</select>
@@ -179,7 +179,7 @@
 								<li class=" punish_sum">
 									<div class="inner clearfix">
 										<span class="fl">处罚金额</span>
-										<select class="fl" filterable v-model="form.nowSelect_sum" prop="punish_sum" style="appearance: none;
+										<select class="fl" v-model="form.nowSelect_sum" prop="punish_sum" style="appearance: none;
 						-webkit-appearance: none;">
 											<option v-for="option,index in options" :key="option" :label="option" :value="option"></option>
 										</select>
@@ -329,12 +329,12 @@
 		color: #fff;
 		z-index: 999;
 		.w(375);
-		.h(48);
+		.h(45);
 		background: #03a9f4;
 		.header_right {
-			.lh(48);
+			.lh(45);
 			.fs(16);
-			.padding-left(105);
+			.padding-left(95);
 			font-weight: bold;
 		}
 	}
@@ -355,7 +355,7 @@
 	}
 	
 	.check_item {
-		.margin-top(48);
+		.margin-top(45);
 		.form-check_item {
 			background: #fff;
 			.padding-bottom(150);
@@ -376,23 +376,20 @@
 					}
 					select {
 						border: none;
-						/*appearance: none;*/
-						/*-webkit-appearance: none;*/
-						.w(250);
+						.w(260);
 						.h(44);
-						/*.padding-left(10);*/
-						.margin-left(10);
+						.margin-left(5);
 						.fs(16);
 						color: #333333;
+						background:#fff;
 					}
 					input {
 						border: none;
 						.top(10);
 						right: 0;
-						.w(250);
+						.w(260);
 						.h(44);
-						.margin-right(5);
-						.margin-left(10);
+						.margin-left(5);
 						.fs(16);
 						color: #333333;
 					}
@@ -444,11 +441,11 @@
 					input {
 						margin: 0;
 						padding: 0;
-						/*.margin-right(5);*/
-						.margin-left(10);
+						.margin-left(5);
 						.fs(16);
 						color: #333333;
-						.w(250);
+						background: #fff;
+						.w(260);
 						.h(44);
 						border-radius: 5px;
 						border-color: #E9E9E9;

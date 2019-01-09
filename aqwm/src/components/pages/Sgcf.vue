@@ -59,7 +59,7 @@
 		<mu-slide-right-transition>
 			<div class="searchBox" v-show="show1">
 				<div class="searchContent">
-					<mu-form ref="form" class="mu-demo-form" :model="filterable">
+					<mu-form ref="form" class="mu-demo-form" :model="form">
 						<ul>
 							<li class="punish_time clearfix">
 								<span class="fl">处罚时间：</span>
@@ -68,25 +68,25 @@
 							</li>
 							<li class="clearfix punish_name">
 								<span class="fl">项目名称：</span>
-								<select filterable v-model="form.select_name" prop="punish_name">
+								<select v-model="form.select_name" prop="punish_name">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_node">
 								<span class="fl">施工节点：</span>
-								<select filterable v-model="form.select_node" prop="punish_node">
+								<select v-model="form.select_node" prop="punish_node">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_area">
 								<span class="fl">期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>
-								<select filterable v-model="form.select_area" prop="punish_area">
+								<select v-model="form.select_area" prop="punish_area">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
 							<li class="clearfix punish_unit">
 								<span class="fl">被处罚单位：</span>
-								<select filterable v-model="form.select_unit" prop="punish_unit">
+								<select v-model="form.select_unit" prop="punish_unit">
 									<option v-for="(city,index) in citys" :key="index" :label="city" :value="city"></option>
 								</select>
 							</li>
@@ -141,11 +141,6 @@
 					'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
 					'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 				],
-				filterable: {
-					value1: '',
-					value2: [],
-					value3: []
-				},
 				form: {
 					select_name: '',
 					select_node: '',
@@ -233,12 +228,12 @@
 		color: #fff;
 		z-index: 999;
 		.w(375);
-		.h(48);
+		.h(45);
 		background: #1B8EE9;
 		.header_center {
-			.lh(48);
+			.lh(45);
 			.fs(16);
-			.padding-left(105);
+			.padding-left(95);
 			font-weight: bold;
 		}
 	}
